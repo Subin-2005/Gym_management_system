@@ -1,0 +1,43 @@
+.member-card{
+
+    background:white;
+
+    border-radius:15px;
+
+    padding:20px;
+
+    margin-bottom:20px;
+
+}
+
+.member-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.member-photo{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+.member-actions{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:20px;
+
+}
