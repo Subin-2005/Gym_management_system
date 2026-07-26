@@ -24,7 +24,7 @@ export default function Reports() {
     if (!report) {
         return (
             <MainLayout>
-                <h3>Loading...</h3>
+                <div className="loading-state"><div className="spinner-border text-primary mb-3" role="status"/><span>Loading reports…</span></div>
             </MainLayout>
         );
     }
@@ -34,7 +34,7 @@ export default function Reports() {
 
             <div className="container-fluid">
 
-                <h2 className="mb-4">
+                <h2 className="page-heading">
                     Reports
                 </h2>
 

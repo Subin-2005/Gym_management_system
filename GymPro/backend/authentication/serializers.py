@@ -3,6 +3,6 @@ from rest_framework import serializers
 
 class LoginSerializer(serializers.Serializer):
 
-    username = serializers.charField()
+    username = serializers.CharField()
 
-    password = serializers.charField(write_only = True)
+    password = serializers.CharField(write_only = True)

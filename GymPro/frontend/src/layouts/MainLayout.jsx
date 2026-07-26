@@ -1,15 +1,19 @@
 import React from 'react'
+import { useState } from 'react'
 import Sidebar from '../components/Sidebar/Sidebar'
 import Navbar from '../components/Navbar/Navbar'
+import './MainLayout.css'
 
 export default function MainLayout({children}) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   return (
     <>
-        <Sidebar/>
+        <Sidebar isOpen={isSidebarOpen} onNavigate={() => setIsSidebarOpen(false)}/>
 
-        <Navbar/>
+        <Navbar onMenuClick={() => setIsSidebarOpen(true)}/>
 
-        <div style={{marginLeft: "250px", marginTop: "70px", padding: "20px"}}>{children}</div>
+        {isSidebarOpen && <button className="nav-backdrop" aria-label="Close navigation" onClick={() => setIsSidebarOpen(false)} />}
+        <main className="app-content">{children}</main>
     
     </>
   )

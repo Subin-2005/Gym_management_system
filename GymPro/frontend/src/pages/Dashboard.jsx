@@ -9,6 +9,8 @@ import {
 } from "react-icons/fa";
 
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import api from '../services/api';
 
@@ -18,6 +20,18 @@ import StatCard from '../components/Cards/StatCard'
 export default function Dashboard() {
 
     const [dashboard, setDashboard] = useState(null);
+
+    const navigate = useNavigate();
+
+    // const [searchParams] = useSearchParams();
+
+    // const [filter, setFilter] = useState(
+    //     searchParams.get("filter") || ""
+    // );
+
+    // useEffect(()=>{
+    //     setFilter(searchParams.get("filter") || "");
+    // }, [searchParams])
 
     useEffect(()=>{
         loadDashboard();
@@ -36,7 +50,7 @@ export default function Dashboard() {
     if(!dashboard){
         return(
             <MainLayout>
-                <h3>Loading....</h3>
+                <div className="loading-state"><div className="spinner-border text-primary mb-3" role="status"/><span>Loading dashboard…</span></div>
             </MainLayout>
         );
     };
@@ -46,7 +60,7 @@ export default function Dashboard() {
 
     <MainLayout>
 
-        <h2 className="mb-2">
+        <h2 className="page-heading">
             Today - {dashboard.today}
         </h2>
 
@@ -58,6 +72,7 @@ export default function Dashboard() {
                     value={dashboard.total_members}
                     icon={<FaUsers />}
                     color="#0d6efd"
+                    onClick={()=> navigate("/members")}
                 />
             </div>
 
@@ -67,6 +82,7 @@ export default function Dashboard() {
                     value={dashboard.active_members}
                     icon={<FaUserCheck />}
                     color="#198754"
+                    onClick={()=>navigate("/members?filter=active")}
                 />
             </div>
 
@@ -76,6 +92,7 @@ export default function Dashboard() {
                     value={dashboard.expired_today}
                     icon={<FaTimesCircle />}
                     color="#dc3545"
+                    onClick={()=>navigate("/members?filter=today")}
                 />
             </div>
 
@@ -102,6 +119,7 @@ export default function Dashboard() {
                     value={dashboard.expiry_1_3}
                     icon={<FaClock />}
                     color="#ffc107"
+                    onClick={()=>navigate("/members?filter=1-3")}
                 />
             </div>
 
@@ -111,6 +129,7 @@ export default function Dashboard() {
                     value={dashboard.expiry_4_7}
                     icon={<FaClock />}
                     color="#fd7e14"
+                    onClick={()=>navigate("/members?filter=4-7")}
                 />
             </div>
 
@@ -120,6 +139,7 @@ export default function Dashboard() {
                     value={dashboard.expiry_8_15}
                     icon={<FaClock />}
                     color="#6f42c1"
+                    onClick={()=>navigate("/members?filter=8-15")}
                 />
             </div>
 

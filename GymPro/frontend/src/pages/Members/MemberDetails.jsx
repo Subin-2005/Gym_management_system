@@ -38,6 +38,39 @@ export default function MemberDetails() {
     };
 
     console.log(member.photo)
+
+
+    const downloadReceipt = async ()=>{
+        try{
+            const response = await api.get(`receipt/${member.id}/`, {responseType: "blob"});
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+
+            link.href = url;
+            link.setAttribute("download", `${member.membership_id}.pdf`);
+
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+            window.URL.revokeObjectURL(url);
+        }
+        catch(error){
+            console.log(error);
+            alert("Unable to download receipt");
+        }
+    }
+
+    const formatDate = (date) => {
+        if (!date) return "";
+
+        return new Date(date).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+        });
+    };
     
   return (
     <MainLayout>
@@ -105,12 +138,12 @@ export default function MemberDetails() {
 
                                 <div className="col-md-6">
                                     <p><strong>Date of Birth</strong></p>
-                                    <p>{member.dob}</p>
+                                    <p>{formatDate(member.dob)}</p>
                                 </div>
 
                                 <div className="col-md-6">
                                     <p><strong>Joining Date</strong></p>
-                                    <p>{member.joining_date}</p>
+                                    <p>{formatDate(member.joining_date)}</p>
                                 </div>
 
                             </div>
@@ -144,12 +177,12 @@ export default function MemberDetails() {
 
                             <div className="col-md-6">
                                 <p><strong>Payment Date</strong></p>
-                                <p>{member.current_membership.payment_date}</p>
+                                <p>{formatDate(member.current_membership.payment_date)}</p>
                             </div>
 
                             <div className="col-md-6">
                                 <p><strong>Expiry Date</strong></p>
-                                <p>{member.current_membership.expiry_date}</p>
+                                <p>{formatDate(member.current_membership.expiry_date)}</p>
                             </div>
 
                             <div className="col-md-6">
@@ -175,7 +208,7 @@ export default function MemberDetails() {
 
             )}
 
-            <button className="btn btn-danger" onClick={()=>{window.open(`http://127.0.0.1:8000/api/receipt/${member.id}/`, "_blank")}}>
+            <button className="btn btn-danger" onClick={downloadReceipt}>
                 <FaFilePdf/> Download Receipt
             </button>
 
@@ -216,11 +249,11 @@ export default function MemberDetails() {
                                     </td>
 
                                     <td>
-                                        {history.payment_date}
+                                        {formatDate(history.payment_date)}
                                     </td>
 
                                     <td>
-                                        {history.expiry_date}
+                                        {formatDate(history.expiry_date)}
                                     </td>
 
                                     <td>

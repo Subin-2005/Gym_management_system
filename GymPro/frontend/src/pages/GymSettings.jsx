@@ -3,6 +3,8 @@ import api from "../services/api";
 import MainLayout from "../layouts/MainLayout";
 import { useNavigate } from "react-router-dom";
 
+import { useGym } from "../context/GymContext";
+
 export default function Settings() {
 
     const [form, setForm] = useState({
@@ -12,6 +14,8 @@ export default function Settings() {
         email: "",
         logo: null,
     });
+
+    const {loadGym} = useGym();
 
     const navigate = useNavigate();
 
@@ -58,7 +62,10 @@ export default function Settings() {
             }
         );
 
+        await loadGym();
+
         alert("Settings Saved");
+        // console.log(form.logo);
         navigate("/settings");
 
 

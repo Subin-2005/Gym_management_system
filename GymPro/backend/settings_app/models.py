@@ -1,7 +1,14 @@
 from django.db import models
+from django.conf import settings
 
 
 class GymSetting(models.Model):
+
+    trainer = models.OneToOneField(
+    settings.AUTH_USER_MODEL,
+    on_delete=models.CASCADE,
+    related_name="gym_setting"
+    )
 
     gym_name = models.CharField(
         max_length=150,

@@ -124,7 +124,8 @@ class MemberListAPIView(ListAPIView):
         queryset = Member.objects.filter(trainer = self.request.user).order_by("-created_at")
 
         search = self.request.GET.get("search", "")
-        status = self.request.GET.get("status", "")
+        filter = self.request.GET.get("filter", "")
+        today = timezone.now().date()
 
         if search:
             queryset = queryset.filter(
@@ -134,13 +135,40 @@ class MemberListAPIView(ListAPIView):
                 Q(membership_id__icontains=search)
             )
 
-        if status == "active":
+        if filter == "active":
             queryset = queryset.filter(is_active = True)
 
-        elif status == "inactive":
+        elif filter == "inactive":
             queryset = queryset.filter(is_active = False)
 
-        return queryset
+        if filter in ["expired", "today", "1-3", "4-7", "8-15"]:
+            member_ids = []
+            for member in queryset:
+                membership = member.memberships.order_by("-expiry_date").first()
+
+                if not membership:
+                    continue
+
+                days = (membership.expiry_date - today).days
+
+                if filter == "expired" and days<0:
+                    member_ids.append(member.id)
+
+                elif filter == "today" and days == 0:
+                    member_ids.append(member.id)
+
+                elif filter == "1-3" and 1<= days <= 3:
+                    member_ids.append(member.id)
+
+                elif filter == "4-7" and 4<= days <= 7:
+                    member_ids.append(member.id)
+
+                elif filter == "8-15" and 8<= days <=15:
+                    member_ids.append(member.id)
+
+            queryset = queryset.filter(id__in=member_ids)
+
+        return queryset.distinct()
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

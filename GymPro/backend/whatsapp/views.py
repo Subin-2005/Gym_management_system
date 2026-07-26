@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from settings_app.models import GymSetting
+
 from django.shortcuts import get_object_or_404
 from django.utils.http import urlencode
 
@@ -8,15 +10,18 @@ from membership.models import Membership
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from .models import WhatsAppSetting
 from .serializers import WhatsAppSettingSerializer
 
 class WhatsAppSettingAPIView(APIView):
 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
 
-        setting = WhatsAppSetting.objects.first()
+        setting, created = WhatsAppSetting.objects.get_or_create(trainer=request.user)
 
         if not setting:
 
@@ -28,7 +33,7 @@ class WhatsAppSettingAPIView(APIView):
 
     def put(self, request):
 
-        setting = WhatsAppSetting.objects.first()
+        setting, created = WhatsAppSetting.objects.get_or_create(trainer=request.user)
 
         serializer = WhatsAppSettingSerializer(
             setting,
@@ -44,28 +49,14 @@ class WhatsAppSettingAPIView(APIView):
 
 class WhatsAppMessageAPIView(APIView):
 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, member_id):
 
-        setting = WhatsAppSetting.objects.first()
+        setting, created = WhatsAppSetting.objects.get_or_create(trainer=request.user)
 
-        if not setting:
-            setting = WhatsAppSetting.objects.create(
-                # enable_reminder = True,
-                # reminder_days = 3,
-                # template = """
-                #     Hi {member_name},
+        gym_setting, created = GymSetting.objects.get_or_create(trainer=request.user)
 
-                #     Your Gym membership will expire on {expiry_date}.
-
-                #     plan: {plan}
-                #     Membership ID: {membership_id}
-
-                #     Please renew your membership.
-
-                #     Thank You.
-
-                # """
-            )
 
         member = get_object_or_404(Member, pk=member_id, trainer = request.user)
 
@@ -87,6 +78,8 @@ class WhatsAppMessageAPIView(APIView):
             "{phone}",
             member.phone
         )
+
+        message = message.replace("{gym_name}", gym_setting.gym_name)
 
         if membership:
 

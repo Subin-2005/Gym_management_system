@@ -22,7 +22,7 @@ class LoginAPIView(APIView):
 
         serializer.is_valid(raise_exception = True)
 
-        username = serializer.validated_date["username"]
+        username = serializer.validated_data["username"]
         password = serializer.validated_data["password"]
 
         user = authenticate(

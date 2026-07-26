@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from .models import GymSetting
 from .serializers import GymSettingSerializer
@@ -9,12 +10,11 @@ from .serializers import GymSettingSerializer
 
 class GymSettingAPIView(APIView):
 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
 
-        setting = GymSetting.objects.first()
-
-        if not setting:
-            setting = GymSetting.objects.create()
+        setting, created = GymSetting.objects.get_or_create(trainer=request.user)
 
         serializer = GymSettingSerializer(
             setting,
@@ -25,12 +25,14 @@ class GymSettingAPIView(APIView):
 
     def put(self, request):
 
-        setting = GymSetting.objects.first()
+        setting, created = GymSetting.objects.get_or_create(trainer=request.user)
 
         serializer = GymSettingSerializer(
             setting,
             data=request.data,
-            partial=True
+            # files = request.FILES,
+            partial=True,
+            context = {"request": request}
         )
 
         if serializer.is_valid():

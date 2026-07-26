@@ -1,8 +1,15 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 
 class WhatsAppSetting(models.Model):
+
+    trainer = models.OneToOneField(
+    settings.AUTH_USER_MODEL,
+    on_delete=models.CASCADE,
+    related_name="whatsapp_setting"
+    )
 
     enable_reminder = models.BooleanField(default=True)
 
@@ -20,7 +27,7 @@ class WhatsAppSetting(models.Model):
         Please renew your membership.
 
         Thank you,
-        GymPro
+        {gym_name}
 
         """
 

@@ -9,7 +9,7 @@ import Reports from "../pages/reports/Reports";
 import Settings from "../pages/Settings";
 import Notifications from "../pages/notifications/Notifications";
 import GymSettings from "../pages/GymSettings"
-import Login from "../pages/Login";
+import Login from "../pages/login/Login";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 import React from 'react'
@@ -20,9 +20,9 @@ export default function AppRoutes() {
     <BrowserRouter>
         <Routes>
 
-            <Route path="/" element={<Login/>}/>
+            <Route path="/login" element={<Login/>}/>
 
-            <Route path="/dashboard" element={<ProtectedRoute> <Dashboard/> </ProtectedRoute>}/>
+            <Route path="/" element={<ProtectedRoute> <Dashboard/> </ProtectedRoute>}/>
 
             <Route path="/members" element={<ProtectedRoute> <Members/> </ProtectedRoute>}/>
 

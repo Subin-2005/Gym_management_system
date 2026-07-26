@@ -7,11 +7,14 @@ from django.utils import timezone
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from members.models import Member
 from membership.models import Membership
 
 class DashboardAPIView(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         today = timezone.now().date()

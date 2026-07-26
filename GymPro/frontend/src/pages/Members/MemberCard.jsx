@@ -45,8 +45,18 @@ export default function MemberCard({member}) {
     }
   };
 
+  const formDate = (date) => {
+    if(!date) return "";
+
+    return new Date(date).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
+
   return (
-    <div className="member-card shadow">
+    <div className="member-card shadow" style={{cursor: "pointer"}} onClick={()=> navigate(`/members/${member.id}`)}>
       <div className="member-header">
 
         <img 
@@ -59,43 +69,75 @@ export default function MemberCard({member}) {
         className="member-photo" 
         />
 
-        <div>
-            <h5>{member.member_name}</h5>
-            <p>{member.membership_id}</p>
+        <div className="member-details">
+            
+            <div className="detail-item">
+              <span className="label">Name</span>
+              <span>{member.member_name}</span>
+            </div>
+
+            <div className="detail-item">
+              <span className="label">Mobile</span>
+              <span>{member.phone}</span>
+            </div>
+
+            <div className="detail-item">
+              <span className="label">M ID</span>
+              <span>{member.membership_id}</span>
+            </div>
+
+            <div className="detail-item">
+              <span className="label">Joined</span>
+              <span>{formDate(member.joining_date)}</span>
+            </div>
+
+            {
+              member.current_membership && (
+                <>
+                  <div className="detail-item">
+                    <span className="label">Plan</span>
+                    <span>{member.current_membership.membership_duration} Month(s)</span>
+                  </div>
+
+                  <div className="detail-item">
+                    <span className="label">Expiry</span>
+                    <span className="expiry">{formDate(member.current_membership.expiry_date)}</span>
+                  </div>
+                
+                </>
+              )
+            }
         </div>
 
       </div>
 
       <hr />
 
-      <p>
-        <FaPhone/> {member.phone}
-      </p>
+      <div className="member-actions" onClick={(e)=>e.stopPropagation()}>
 
-      <p>
-        <FaCalendarAlt/> joining: {" "} {member.joining_date}
-      </p>
-
-      <div className="member-actions">
-
-        <button className="btn btn-primary btn-sm" onClick={()=>navigate(`/members/${member.id}`)}>
-            <FaEye/> View
+        <button className="action-btn" onClick={()=>window.location.href = `tel:${member.phone}`}>
+            <FaPhone/>
+            <span>Call</span> 
         </button>
 
-        <button className="btn btn-success btn-sm" onClick={()=> navigate(`/members/${member.id}/renew`)}>
-            <FaRedo /> Renew
-        </button>
-
-        <button className="btn btn-success btn-sm" onClick={sendWhatsapp}>
+        <button className="action-btn" onClick={sendWhatsapp}>
           <FaWhatsapp/>
+          <span>WhatsApp</span>
         </button>
 
-        <button className="btn btn-warning btn-sm" onClick={()=>navigate(`/members/${member.id}/edit`)}>
+        <button className="action-btn" onClick={()=> navigate(`/members/${member.id}/renew`)}>
+            <FaRedo /> 
+            <span>Renew</span>
+        </button>
+
+        <button className="action-btn" onClick={()=>navigate(`/members/${member.id}/edit`)}>
             <FaEdit />
+            <span>Edit</span>
         </button>
 
-        <button className="btn btn-danger btn-sm" onClick={deleteMember}>
+        <button className="action-btn delete-btn" onClick={deleteMember}>
             <FaTrash />
+            <span>Delete</span>
         </button>
         
       </div>

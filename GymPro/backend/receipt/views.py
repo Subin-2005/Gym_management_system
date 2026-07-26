@@ -6,6 +6,7 @@ from django.http import FileResponse
 from django.shortcuts import get_object_or_404
 
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
@@ -26,9 +27,11 @@ from settings_app.models import GymSetting
 
 class ReceiptAPIView(APIView):
 
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, member_id):
 
-        setting = GymSetting.objects.first()
+        setting = get_object_or_404(GymSetting, trainer=request.user)
         member = get_object_or_404(Member, pk = member_id, trainer = request.user)
         membership = member.memberships.order_by("-payment_date").first()
 
@@ -38,13 +41,22 @@ class ReceiptAPIView(APIView):
         styles = getSampleStyleSheet()
         elements = []
 
-        logo = os.path.join(settings.MEDIA_ROOT, "gym_logo.png")
-        if os.path.exists(logo):
-            img = Image(logo)
-            img.drawHeight = 1*inch
-            img.drawWidth = 1*inch
+        # logo = os.path.join(settings.MEDIA_ROOT, "gym_logo.png")
+
+        if setting.logo and os.path.exists(setting.logo.path):
+            img = Image(setting.logo.path)
+            img.drawHeight = 80
+            img.drawWidth = 80
             img.hAlign = "CENTER"
             elements.append(img)
+            print("logo added")
+
+        # from PIL import Image as PILImage
+
+        # pil = PILImage.open(setting.logo.path)
+        # print(pil.size)
+
+        # img = Image(setting.logo.path)
 
         # elements.append(Paragraph("<b> <font size=20> GymPro </font> </b>", styles["Title"]))
 
@@ -107,9 +119,9 @@ class ReceiptAPIView(APIView):
         footer = styles["Normal"]
         footer.alignment = TA_CENTER
         elements.append(Paragraph("<b> Payment Received Successfully </b>", footer))
-        elements.append(Paragraph("<b> Thank you for choosing GymPro </b>", footer))
+        elements.append(Paragraph(f"<b> Thank you for choosing {setting.gym_name} </b>", footer))
         elements.append(Spacer(1, 40))
-        elements.append(Paragraph("Authorized Signature", styles["Normal"]))
+        # elements.append(Paragraph("Authorized Signature", styles["Normal"]))
 
         doc.build(elements)
 
