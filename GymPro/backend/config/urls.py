@@ -19,10 +19,6 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,8 +31,6 @@ urlpatterns = [
     path("api/settings/", include("settings_app.urls")),
     path("api/", include("authentication.urls")),
 
-    # path("api/login/", TokenObtainPairView.as_view()),
-    # path("api/token/refresh/", TokenRefreshView.as_view()),
 ]
 
 urlpatterns += static(
