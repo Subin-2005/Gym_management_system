@@ -4,7 +4,7 @@ import {
     FaRedo,
     FaEdit,
     FaTrash,
-    FaPhone,
+    FaPhoneAlt,
     FaCalendarAlt,
     FaWhatsapp
 } from "react-icons/fa";
@@ -116,7 +116,7 @@ export default function MemberCard({member}) {
       <div className="member-actions" onClick={(e)=>e.stopPropagation()}>
 
         <button className="action-btn" onClick={()=>window.location.href = `tel:${member.phone}`}>
-            <FaPhone/>
+            <FaPhoneAlt/>
             <span>Call</span> 
         </button>
 
