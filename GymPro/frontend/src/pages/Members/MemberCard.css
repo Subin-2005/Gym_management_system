@@ -88,7 +88,7 @@
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
-  gap: 4px;
+  gap: 6px;
   margin: 0;
   padding: 0 1px 1px;
   overflow-x: auto;
@@ -99,28 +99,28 @@
 
 .action-btn {
   display: flex;
-  flex: 1 0 58px;
+  flex: 1 0 76px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  min-height: 46px;
-  padding: 5px 4px;
+  gap: 5px;
+  height: 66px;
+  min-height: 66px;
+  padding: 7px 5px;
   border: 0;
   border-radius: 10px;
   background: transparent;
   color: #64748b;
   cursor: pointer;
   font-family: inherit;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1.1;
   transition: background .2s ease, color .2s ease, transform .2s ease;
 }
 
-.action-btn svg { 
-  font-size: 24px; 
-}
+.action-btn svg { width: 25px; height: 25px; flex: 0 0 25px; font-size: 25px; }
+.action-btn span { font-size: 12px; font-weight: 600; line-height: 1; white-space: nowrap; }
 
 .action-btn:hover, .action-btn:focus-visible { 
   outline: 0; 
@@ -164,15 +164,7 @@
     margin: 10px 0 7px; 
   }
 
-  .member-actions { 
-    gap: 3px; 
-    padding-bottom: 0; 
-  }
-
-  .action-btn { 
-    min-height: 42px; 
-    padding: 4px 3px; 
-  }
+  .member-actions { gap: 6px; padding-bottom: 0; }
 }
 
 @media (max-width: 420px) {
@@ -199,7 +191,5 @@
     justify-content: flex-start; 
   }
 
-  .action-btn { 
-    flex: 0 0 60px; 
-  }
+  .action-btn { flex: 0 0 76px; }
 }
