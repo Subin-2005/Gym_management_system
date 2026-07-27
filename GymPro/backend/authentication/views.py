@@ -53,20 +53,20 @@ class LoginAPIView(APIView):
         })
 
 
-from django.contrib.auth import get_user_model
+# from django.contrib.auth import get_user_model
 
 
-User = get_user_model()
+# User = get_user_model()
 
-class CreateAdminAPIView(APIView):
-    permission_classes = []
-    authentication_classes = []
+# class CreateAdminAPIView(APIView):
+#     permission_classes = []
+#     authentication_classes = []
 
-    def get(self, request):
-        if not User.objects.filter(username="admin").exists():
-            User.objects.create_superuser(
-                username="admin",
-                email="admin@gmail.com",
-                password="Admin@123"
-            )
-        return Response({"message": "Admin created"})
+#     def get(self, request):
+#         if not User.objects.filter(username="admin").exists():
+#             User.objects.create_superuser(
+#                 username="admin",
+#                 email="admin@gmail.com",
+#                 password="Admin@123"
+#             )
+#         return Response({"message": "Admin created"})
