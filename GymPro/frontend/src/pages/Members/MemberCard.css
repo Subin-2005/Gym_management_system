@@ -1,81 +1,150 @@
-.member-card{
-    background:white;
-    border-radius:15px;
-    padding:20px;
-    margin-bottom:20px;
+.member-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 222px;
+  margin-bottom: 0;
+  padding: 14px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 26px !important;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, .08) !important;
+  transition: transform .22s ease, box-shadow .22s ease;
 }
 
-.member-photo{
-    width:70px;
-    height:70px;
-    border-radius:50%;
-    object-fit:cover;
+.member-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px rgba(15, 23, 42, .13) !important;
 }
 
-.member-actions{
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    margin-top:15px;
-    border-top:1px solid #ddd;
-    padding-top:15px;
+.member-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.action-btn{
-    border:none;
-    background:none;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:6px;
-    cursor:pointer;
-    color:#444;
-    font-size:14px;
-    transition:.3s;
+.member-photo {
+  width: 54px;
+  height: 54px;
+  flex: 0 0 54px;
+  border: 2px solid #dbeafe;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #eff6ff;
 }
 
-.action-btn svg{
-    font-size:24px;
+.member-details {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px 12px;
+  min-width: 0;
 }
 
-.action-btn:hover{
-    color:#0d6efd;
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 2px;
 }
 
-.delete-btn:hover{
-    color:#dc3545;
+.label {
+  overflow: hidden;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.member-header{
-    display:flex;
-    gap:20px;
-    align-items:center;
+.detail-item span:last-child {
+  overflow: hidden;
+  color: #1e293b;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.member-details{
-    flex:1;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:18px 40px;
+.detail-item:first-child span:last-child {
+  font-size: 13px;
+  font-weight: 700;
 }
 
-.detail-item{
-    display:flex;
-    flex-direction:column;
+.expiry { color: #16a34a !important; }
+
+.member-card hr {
+  width: 100%;
+  margin: 13px 0 9px;
+  border: 0;
+  border-top: 1px solid #e2e8f0;
+  opacity: 1;
 }
 
-.label{
-    font-size:14px;
-    font-weight:600;
-    color:#0f766e;
+.member-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  margin: 0;
+  padding: 0 1px 1px;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
-.detail-item span:last-child{
-    font-size:18px;
-    font-weight:500;
+.member-actions::-webkit-scrollbar { display: none; }
+
+.action-btn {
+  display: flex;
+  flex: 1 0 58px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 46px;
+  padding: 5px 4px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1.1;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
 }
 
-.expiry{
-    color:#16a34a;
-    font-weight:bold;
+.action-btn svg { 
+  font-size: 15px; 
+}
+
+.action-btn:hover, .action-btn:focus-visible { 
+  outline: 0; 
+  background: #eff6ff; 
+  color: #2563eb; 
+  transform: translateY(-1px); 
+}
+
+.delete-btn:hover, .delete-btn:focus-visible { 
+  background: #fef2f2; 
+  color: #ef4444; 
+}
+
+@media (max-width: 767.98px) {
+  .member-details { 
+    grid-template-columns: repeat(2, minmax(0, 1fr)); 
+  }
+}
+
+@media (max-width: 420px) {
+  .member-card { min-height: 218px; padding: 12px; }
+  .member-header { gap: 10px; }
+  .member-photo { width: 48px; height: 48px; flex-basis: 48px; }
+  .member-details { gap: 9px 10px; }
+  .member-actions { justify-content: flex-start; }
+  .action-btn { flex: 0 0 60px; }
 }

@@ -72,7 +72,7 @@ export default function MemberCard({member}) {
         <div className="member-details">
             
             <div className="detail-item">
-              <span className="label">Name</span>
+              <span className="label">Member Name</span>
               <span>{member.member_name}</span>
             </div>
 
@@ -82,7 +82,7 @@ export default function MemberCard({member}) {
             </div>
 
             <div className="detail-item">
-              <span className="label">M ID</span>
+              <span className="label">Member ID</span>
               <span>{member.membership_id}</span>
             </div>
 
@@ -100,7 +100,7 @@ export default function MemberCard({member}) {
                   </div>
 
                   <div className="detail-item">
-                    <span className="label">Expiry</span>
+                    <span className="label">Plan Expiry</span>
                     <span className="expiry">{formDate(member.current_membership.expiry_date)}</span>
                   </div>
                 
@@ -127,7 +127,7 @@ export default function MemberCard({member}) {
 
         <button className="action-btn" onClick={()=> navigate(`/members/${member.id}/renew`)}>
             <FaRedo /> 
-            <span>Renew</span>
+            <span>Renew Plan</span>
         </button>
 
         <button className="action-btn" onClick={()=>navigate(`/members/${member.id}/edit`)}>
