@@ -11,51 +11,50 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import LoginSerializer
 
 
-# class LoginAPIView(APIView):
+class LoginAPIView(APIView):
 
-#     permission_classes = []
-#     authentication_classes = []
+    permission_classes = []
+    authentication_classes = []
 
-#     def post(self, request):
+    def post(self, request):
 
-#         serializer = LoginSerializer(data = request.data)
+        serializer = LoginSerializer(data = request.data)
 
-#         serializer.is_valid(raise_exception = True)
+        serializer.is_valid(raise_exception = True)
 
-#         username = serializer.validated_data["username"]
-#         password = serializer.validated_data["password"]
+        username = serializer.validated_data["username"]
+        password = serializer.validated_data["password"]
 
-#         user = authenticate(
-#             username = username,
-#             password = password
-#         )
+        user = authenticate(
+            username = username,
+            password = password
+        )
 
-#         if user is None:
+        if user is None:
 
-#             return Response(
-#                 {
-#                     "message": "Invalid Username or Password"
-#                 },
-#                 status = status.HTTP_401_UNAUTHORIZED
-#             )
+            return Response(
+                {
+                    "message": "Invalid Username or Password"
+                },
+                status = status.HTTP_401_UNAUTHORIZED
+            )
 
-#         refresh = RefreshToken.for_user(user)
+        refresh = RefreshToken.for_user(user)
 
-#         return Response({
-#             "access": str(refresh.access_token),
-#             "refresh": str(refresh),
+        return Response({
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
 
-#             "user": {
-#                 "id": user.id,
-#                 "username": user.username,
-#                 "role": user.role,
-#             }
-#         })
+            "user": {
+                "id": user.id,
+                "username": user.username,
+                "role": user.role,
+            }
+        })
 
 
 from django.contrib.auth import get_user_model
-# from rest_framework.views import APIView
-# from rest_framework.response import Response
+
 
 User = get_user_model()
 
