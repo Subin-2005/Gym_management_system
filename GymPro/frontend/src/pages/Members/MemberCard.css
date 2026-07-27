@@ -142,6 +142,25 @@
   .member-details { 
     grid-template-columns: repeat(2, minmax(0, 1fr)); 
   }
+
+  .member-actions {
+    gap: 0;
+    justify-content: stretch;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .action-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 54px;
+    min-height: 54px;
+    padding: 4px 1px;
+    gap: 3px;
+  }
+
+  .action-btn svg { width: 19px; height: 19px; flex-basis: 19px; font-size: 19px; }
+  .action-btn span { font-size: 10px; line-height: 1; white-space: normal; }
 }
 
 /* Keep laptop and desktop cards content-sized instead of reserving empty space. */
@@ -191,5 +210,4 @@
     justify-content: flex-start; 
   }
 
-  .action-btn { flex: 0 0 76px; }
 }
