@@ -21,6 +21,8 @@ class GymSettingSerializer(serializers.ModelSerializer):
 
         data = super().to_representation(instance)
 
+        request = self.context.get("request")
+
         if instance.logo:
             if request:
                 data["logo"] = request.build_absolute_uri(instance.logo.url)

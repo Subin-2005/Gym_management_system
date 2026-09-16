@@ -74,8 +74,11 @@ export default function Settings() {
             alert("Settings Saved Successfully");
             navigate("/settings");
         } catch (error) {
-            console.log(error);
-            alert("Failed to save settings. Please try again.");
+            console.error("Settings save error:", error);
+            const errorMsg = error.response?.data 
+                ? (typeof error.response.data === "string" ? error.response.data : JSON.stringify(error.response.data))
+                : error.message || "Failed to save settings. Please try again.";
+            alert("Save Failed: " + errorMsg);
         } finally {
             setSaving(false);
         }
