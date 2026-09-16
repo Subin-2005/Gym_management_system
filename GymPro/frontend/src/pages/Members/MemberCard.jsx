@@ -1,21 +1,19 @@
 import "./MemberCard.css";
 import {
-    FaEye,
     FaRedo,
     FaEdit,
     FaTrash,
     FaPhoneAlt,
-    FaCalendarAlt,
     FaWhatsapp
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
-
-import React from 'react'
+import React from 'react';
+import { getImageUrl, handleImageError } from "../../utils/imageUrl";
 
 export default function MemberCard({member}) {
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const deleteMember = async ()=>{
     const confirmDelete = window.confirm("Are you sure you want to delete this member?");
@@ -55,18 +53,17 @@ export default function MemberCard({member}) {
     });
   };
 
+  const photoSrc = getImageUrl(member.photo, "/default-user.png");
+
   return (
     <div className="member-card shadow" style={{cursor: "pointer"}} onClick={()=> navigate(`/members/${member.id}`)}>
       <div className="member-header">
 
         <img 
-        src= {
-            member.photo
-                ? member.photo
-                : "/default-user.png"
-        }
-        alt={member.member_name}
-        className="member-photo" 
+          src={photoSrc}
+          alt={member.member_name}
+          className="member-photo" 
+          onError={(e) => handleImageError(e, "/default-user.png")}
         />
 
         <div className="member-details">

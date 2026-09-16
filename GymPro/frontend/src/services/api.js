@@ -1,7 +1,10 @@
-import axios from "axios"
+import axios from "axios";
+
+export const API_BASE_URL = "https://gym-management-system-wwdi.onrender.com/api/";
+export const BACKEND_URL = "https://gym-management-system-wwdi.onrender.com";
 
 const api = axios.create({
-    baseURL: "https://gym-management-system-wwdi.onrender.com/api/",
+    baseURL: API_BASE_URL,
 });
 
 api.interceptors.request.use((config) =>{

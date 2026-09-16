@@ -26,8 +26,12 @@ class AddMemberAPIView(APIView):
     @transaction.atomic
     def post(self, request):
 
+        photo = request.data.get("photo")
+        if photo in ["null", "undefined", "", None]:
+            photo = None
+
         member_data = {
-            "photo": request.data.get("photo"),
+            "photo": photo,
             "member_name": request.data.get("member_name"),
             "dob": request.data.get("dob"),
             "gender": request.data.get("gender"),
@@ -196,7 +200,8 @@ class MemberDetailAPIView(APIView):
         serializer = MemberSerializer(
             member,
             data=request.data,
-            partial=True
+            partial=True,
+            context={"request": request}
         )
 
         if serializer.is_valid():

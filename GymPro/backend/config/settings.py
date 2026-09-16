@@ -35,7 +35,13 @@ ALLOWED_HOSTS = [
     ".onrender.com",
     "localhost",
     "127.0.0.1",
+    "*",
 ]
+
+# Ensure reverse-proxy HTTPS headers are trusted on Render / production
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+
 
 
 # Application definition

@@ -2,15 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MainLayout from "../../layouts/MainLayout";
 import api from "../../services/api";
-
 import { FaFilePdf } from "react-icons/fa";
-
-import React from 'react'
+import React from 'react';
+import { getImageUrl, handleImageError } from "../../utils/imageUrl";
 
 export default function MemberDetails() {
 
     const {id} = useParams();
-    // console.log(id);
 
     const [member, setMember] = useState(null);
 
@@ -21,7 +19,6 @@ export default function MemberDetails() {
     const loadMember = async ()=>{
         try{
             const {data} = await api.get(`members/${id}/`);
-            // console.log("API Response:", data);
             setMember(data);
         }
         catch(error){
@@ -36,9 +33,6 @@ export default function MemberDetails() {
             </MainLayout>
         );
     };
-
-    console.log(member.photo)
-
 
     const downloadReceipt = async ()=>{
         try{
@@ -72,6 +66,8 @@ export default function MemberDetails() {
         });
     };
     
+    const photoSrc = getImageUrl(member.photo, "/default-user.png");
+
   return (
     <MainLayout>
 
@@ -86,11 +82,7 @@ export default function MemberDetails() {
                         <div className="col-md-3 text-center">
 
                             <img
-                                src={
-                                    member.photo
-                                        ? member.photo
-                                        : "/default-user.png"
-                                }
+                                src={photoSrc}
                                 alt={member.member_name}
                                 className="img-fluid rounded-circle border"
                                 style={{
@@ -98,6 +90,7 @@ export default function MemberDetails() {
                                     height: "180px",
                                     objectFit: "cover"
                                 }}
+                                onError={(e) => handleImageError(e, "/default-user.png")}
                             />
 
                             <h4 className="mt-3">

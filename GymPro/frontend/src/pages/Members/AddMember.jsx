@@ -48,7 +48,13 @@ export default function AddMember() {
             const data = new FormData();
 
             Object.keys(formData).forEach((key) => {
-                data.append(key, formData[key]);
+                if (key === "photo") {
+                    if (formData.photo instanceof File) {
+                        data.append("photo", formData.photo);
+                    }
+                } else if (formData[key] !== null && formData[key] !== undefined) {
+                    data.append(key, formData[key]);
+                }
             });
 
             await api.post("members/add/", data, {
